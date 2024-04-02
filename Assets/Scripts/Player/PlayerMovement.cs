@@ -8,47 +8,65 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float _acceleration;
     [SerializeField]
-    private float _maxSpeed;
+    private float _maxGroundSpeed;
+    [SerializeField]
+    private float _maxAirSpeed;
 
     [SerializeField]
     private float _playerHeight;
 
     private Vector2 _dir;
+    private LayerMask _whatIsGround;
     private Rigidbody2D _rb;
 
-    private float _drag;
+    private float _initDrag;
+    private float _initGravScale;
+
+    // Local Use
+
 
     private void Awake()
     {
         var input = GetComponent<PlayerInputHandler>();
         input.Movement += OnMovement;
+
         _rb = GetComponent<Rigidbody2D>();
-        _drag = _rb.drag;
+        _initDrag = _rb.drag;
+        _initGravScale = _rb.gravityScale;
+
+        _whatIsGround = LayerMask.GetMask("Ground");
     }
 
     private void FixedUpdate()
     {
-        if (Mathf.Abs(_rb.velocity.x) < Mathf.Abs(_maxSpeed))
-        {
-            _rb.AddForce(_dir * _acceleration, ForceMode2D.Force);
-        }
+        _rb.AddForce(_dir * _acceleration, ForceMode2D.Force);
 
-        RaycastHit2D grounded = Physics2D.Raycast(transform.position, Vector2.down, ((_playerHeight * 0.5f) + 0.1f));
+        bool isGrounded = Physics2D.Raycast(transform.position, Vector2.down, (_playerHeight * 0.5f) + 0.05f, _whatIsGround);
 
-        if (grounded.collider != null)
+        if (isGrounded)
         {
-            Debug.Log("I'm on the ground, biiiiiitch.");
-            _rb.drag = _drag;
+            _rb.drag = _initDrag;
+            _rb.gravityScale = _initGravScale;
+            SpeedControl(_maxGroundSpeed);
         }
         else
         {
-            Debug.Log("I'm in the air motherfucker.");
             _rb.drag = 0.0f;
+            SpeedControl(_maxAirSpeed);
         }
     }
 
     private void OnMovement(InputAction.CallbackContext ctx)
     {
         _dir = new Vector2(ctx.ReadValue<Vector2>().x, 0).normalized;
+    }
+
+    private void SpeedControl(float maxSpeed)
+    {
+        if (Mathf.Abs(_rb.velocity.x) > Mathf.Abs(maxSpeed))
+        {
+            float veloX = Mathf.Clamp(_rb.velocity.x + _dir.x * _acceleration, maxSpeed * -1, maxSpeed);
+            _rb.velocity = new Vector2(veloX, _rb.velocity.y);
+        }
     }
 }

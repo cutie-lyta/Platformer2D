@@ -31,8 +31,6 @@ public class PlayerTeleport : MonoBehaviour
         _dir = ctx.ReadValue<Vector2>().normalized;
     }
 
-
-
     void OnTeleport(InputAction.CallbackContext ctx)
     {
         if (ctx.performed)
