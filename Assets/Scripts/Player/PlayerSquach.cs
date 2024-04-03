@@ -5,8 +5,8 @@ using DG.Tweening;
 public class PlayerSquach : MonoBehaviour
 {
     private bool isSlamming;
-    private int _framecounter;
     private Vector3 _scale;
+    private int _framecounter;
 
     private void Awake()
     {

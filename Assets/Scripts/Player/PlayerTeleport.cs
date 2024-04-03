@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 public class PlayerTeleport : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class PlayerTeleport : MonoBehaviour
     [SerializeField]
     private GameObject _particle;
 
+    [SerializeField]
+    private GameObject _trail;
+    
     [Tooltip("Debug flag -> AddForce or Velocity")]
     [SerializeField]
     private bool _testForce;
@@ -57,6 +61,8 @@ public class PlayerTeleport : MonoBehaviour
 
             print(cast.collider);
 
+            var trail = Instantiate(_trail, this.transform.position, this.transform.rotation);
+
             if (cast.collider == null)
             {
                 transform.position += (Vector3)(_dir * _distance);
@@ -70,6 +76,8 @@ public class PlayerTeleport : MonoBehaviour
             }
 
             Instantiate(_particle, transform.position, transform.rotation);
+            trail.transform.DOMove(transform.position, .1f);
+
 
             if (_testForce) _rb.AddForce(_dir * _speed, ForceMode2D.Impulse);
             else _rb.velocity = _dir * _speed;
