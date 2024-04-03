@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.ParticleSystem;
 
 [RequireComponent(typeof(PlayerInputHandler))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -15,9 +16,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float _playerHeight;
 
+    [SerializeField]
+    private GameObject _partMovement;
+
     private Vector2 _dir;
     private LayerMask _whatIsGround;
     private Rigidbody2D _rb;
+    private GameObject _part;
 
     private float _initDrag;
     private float _initGravScale;
@@ -55,6 +60,21 @@ public class PlayerMovement : MonoBehaviour
             _rb.drag = 0.0f;
             SpeedControl(_maxAirSpeed);
         }
+
+        if (_rb.velocity != Vector2.zero && IsGrounded)
+        {
+            _partMovement.transform.position = new Vector3(0, 0.85f, 0);
+            if (_part == null)
+            {
+                _part = Instantiate(_partMovement, this.transform);
+            }
+        }
+
+        else
+        {
+            Destroy(_part);
+        }
+
     }
 
     private void OnMovement(InputAction.CallbackContext ctx)
