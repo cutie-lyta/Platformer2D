@@ -19,8 +19,7 @@ public class PlayerSlam : MonoBehaviour
         _tr = GetComponent<TrailRenderer>();
         _tr.enabled = false;
 
-        var input = GetComponent<PlayerInputHandler>();
-        input.Slam += OnSlam;
+        PlayerMain.Instance.Input.Slam += OnSlam;
     }
 
     void OnSlam(InputAction.CallbackContext ctx)

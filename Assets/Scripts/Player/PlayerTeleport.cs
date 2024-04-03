@@ -9,6 +9,9 @@ public class PlayerTeleport : MonoBehaviour
     [SerializeField]
     private float _speed;
 
+    [SerializeField]
+    private int _maxTP;
+
     [Tooltip("Debug flag -> AddForce or Velocity")]
     [SerializeField]
     private bool _testForce;
@@ -17,13 +20,15 @@ public class PlayerTeleport : MonoBehaviour
 
     Vector2 _dir;
 
+    int availableTP;
+
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        var input = GetComponent<PlayerInputHandler>();
-        input.Teleport += OnTeleport;
-        input.Movement += OnMovement;
+        PlayerMain.Instance.Input.Teleport += OnTeleport;
+        PlayerMain.Instance.Input.Movement += OnMovement;
+        availableTP = _maxTP;
     }
 
     void OnMovement(InputAction.CallbackContext ctx)
@@ -33,7 +38,7 @@ public class PlayerTeleport : MonoBehaviour
 
     void OnTeleport(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
+        if (ctx.performed && availableTP > 0)
         {
             if (_dir == Vector2.zero) return;
 
@@ -50,7 +55,15 @@ public class PlayerTeleport : MonoBehaviour
 
                 if (_testForce) _rb.AddForce(_dir * _speed, ForceMode2D.Impulse);
                 else _rb.velocity = _dir * _speed;
+
+                availableTP--;
             }
         }
+    }
+
+    void FixedUpdate()
+    {
+        if (PlayerMain.Instance.Movement.IsGrounded) availableTP = _maxTP;
+
     }
 }

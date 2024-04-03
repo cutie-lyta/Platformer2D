@@ -22,13 +22,14 @@ public class PlayerMovement : MonoBehaviour
     private float _initDrag;
     private float _initGravScale;
 
+    public bool IsGrounded { get; private set; }
+
     // Local Use
 
 
     private void Awake()
     {
-        var input = GetComponent<PlayerInputHandler>();
-        input.Movement += OnMovement;
+        PlayerMain.Instance.Input.Movement += OnMovement;
 
         _rb = GetComponent<Rigidbody2D>();
         _initDrag = _rb.drag;
@@ -41,9 +42,9 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb.AddForce(_dir * _acceleration, ForceMode2D.Force);
 
-        bool isGrounded = Physics2D.Raycast(transform.position, Vector2.down, (_playerHeight * 0.5f) + 0.05f, _whatIsGround);
+        IsGrounded = Physics2D.Raycast(transform.position, Vector2.down, (_playerHeight * 0.5f) + 0.05f, _whatIsGround);
 
-        if (isGrounded)
+        if (IsGrounded)
         {
             _rb.drag = _initDrag;
             _rb.gravityScale = _initGravScale;
