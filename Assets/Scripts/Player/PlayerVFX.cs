@@ -3,26 +3,25 @@ using UnityEngine.VFX;
 
 public class PlayerVFX : MonoBehaviour
 {
-    private PlayerInputHandler _handler;
-
     private VisualEffect _vfx;
 
     private bool isSlamming = false;
+    private int _frameCounter;
 
     void Awake()
     {
-        _handler = GetComponent<PlayerInputHandler>();
-        _handler.Slam += (ctx) => { isSlamming = true; };
+        PlayerMain.Instance.Input.Slam += (ctx) => { isSlamming = true; _frameCounter = 0; };
 
         _vfx = GetComponentInChildren<VisualEffect>();
     }
 
-    private void OnCollisionEnter2D(Collision2D col)
+    private void FixedUpdate()
     {
-        if (isSlamming)
+        if (PlayerMain.Instance.Movement.IsGrounded && isSlamming && _frameCounter > 4)
         {
             _vfx.Play();
             isSlamming = false;
         }
+        _frameCounter++;
     }
 }

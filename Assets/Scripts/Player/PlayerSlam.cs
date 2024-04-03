@@ -11,6 +11,7 @@ public class PlayerSlam : MonoBehaviour
 
     private Rigidbody2D _rb;
     private TrailRenderer _tr;
+    private int _frameCounter;
 
     // Start is called before the first frame update
     void Start()
@@ -30,13 +31,18 @@ public class PlayerSlam : MonoBehaviour
             _rb.AddForce(new Vector2(0, _initJumpForce), ForceMode2D.Impulse);
             _rb.gravityScale = _gravScale / 2;
             _tr.enabled = true;
+            _frameCounter = 0;
             Invoke("ChangeGravity", 0.3f);
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void FixedUpdate()
     {
-        _tr.enabled = false;
+        if (PlayerMain.Instance.Movement.IsGrounded && _frameCounter > 4)
+        {
+            _tr.enabled = false;
+        }
+        _frameCounter++;
     }
 
     private void ChangeGravity()

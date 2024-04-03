@@ -12,6 +12,9 @@ public class PlayerTeleport : MonoBehaviour
     [SerializeField]
     private int _maxTP;
 
+    [SerializeField]
+    private GameObject _particle;
+
     [Tooltip("Debug flag -> AddForce or Velocity")]
     [SerializeField]
     private bool _testForce;
@@ -52,6 +55,7 @@ public class PlayerTeleport : MonoBehaviour
             if (cast.collider == null)
             {
                 transform.position += (Vector3)(_dir * _distance);
+                Instantiate(_particle, transform.position, transform.rotation);
 
                 if (_testForce) _rb.AddForce(_dir * _speed, ForceMode2D.Impulse);
                 else _rb.velocity = _dir * _speed;

@@ -5,15 +5,20 @@ using DG.Tweening;
 public class PlayerSquach : MonoBehaviour
 {
     private bool isSlamming;
+    private int _framecounter;
+    private Vector3 _scale;
 
     private void Awake()
     {
         PlayerMain.Instance.Input.Slam += OnSlam;
+        PlayerMain.Instance.Input.Teleport += OnPlayerFaitBouinpe;
+        _scale = transform.localScale;
     }
 
     void OnSlam(InputAction.CallbackContext ctx)
     {
         isSlamming = true;
+        _framecounter = 0;
     }
 
     // Start is called before the first frame update
@@ -32,12 +37,26 @@ public class PlayerSquach : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    /// <summary>
+    /// Fait le bouinpe
+    /// </summary>
+    void OnPlayerFaitBouinpe(InputAction.CallbackContext ctx)
     {
-        if (isSlamming)
+        if (ctx.performed)
+        {
+            transform.localScale = Vector3.zero;
+
+            transform.DOScale(_scale, 0.4f).SetEase(Ease.InOutBack);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (PlayerMain.Instance.Movement.IsGrounded && isSlamming && _framecounter > 4)
         {
             isSlamming = false;
             SlamSquach();
         }
+        _framecounter++;
     }
 }
