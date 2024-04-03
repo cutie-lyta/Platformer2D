@@ -37,10 +37,20 @@ public class PlayerTeleport : MonoBehaviour
         {
             if (_dir == Vector2.zero) return;
 
-            this.transform.position += (Vector3)(_dir * _distance);
+            var vect = transform.position + (Vector3)(_dir * _distance);
+            print(vect);
 
-            if (_testForce) _rb.AddForce(_dir * _speed, ForceMode2D.Impulse);
-            else _rb.velocity = _dir * _speed;
+            var cast = Physics2D.Raycast(vect, _dir, 0.1f);
+
+            print(cast.collider);
+
+            if (cast.collider == null)
+            {
+                transform.position += (Vector3)(_dir * _distance);
+
+                if (_testForce) _rb.AddForce(_dir * _speed, ForceMode2D.Impulse);
+                else _rb.velocity = _dir * _speed;
+            }
         }
     }
 }

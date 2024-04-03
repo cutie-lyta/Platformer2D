@@ -11,9 +11,11 @@ public class PlayerInputHandler : MonoBehaviour
 
     public event Action<InputAction.CallbackContext> Teleport;
 
+    private PlayerInput _input;
+
     private void Awake()
     {
-        var _input = GetComponent<PlayerInput>();
+        _input = GetComponent<PlayerInput>();
         _input.onActionTriggered += OnAction;
     }
 
@@ -33,5 +35,15 @@ public class PlayerInputHandler : MonoBehaviour
                 Teleport?.Invoke(ctx);
                 break;
         }
+    }
+
+    private void StopInput()
+    {
+        _input.enabled = false;
+    }
+
+    private void StartInput()
+    {
+        _input.enabled = true;
     }
 }
