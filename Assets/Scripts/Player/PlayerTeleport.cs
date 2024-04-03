@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerTeleport : MonoBehaviour
 {
+    public event Action Teleport;
+
     [SerializeField]
     private float _distance;
 
@@ -25,6 +28,8 @@ public class PlayerTeleport : MonoBehaviour
 
     int availableTP;
 
+    int _frameCounter;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +46,7 @@ public class PlayerTeleport : MonoBehaviour
 
     void OnTeleport(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed && availableTP > 0)
+        if (ctx.performed && availableTP > 0 && _frameCounter > 14)
         {
             if (_dir == Vector2.zero) return;
 
@@ -57,17 +62,28 @@ public class PlayerTeleport : MonoBehaviour
                 transform.position += (Vector3)(_dir * _distance);
                 Instantiate(_particle, transform.position, transform.rotation);
 
-                if (_testForce) _rb.AddForce(_dir * _speed, ForceMode2D.Impulse);
-                else _rb.velocity = _dir * _speed;
-
-                availableTP--;
             }
+            else
+            {
+                var newCast = Physics2D.Raycast(transform.position, _dir, _distance);
+                transform.position = newCast.point - (_dir * 0.75f);
+            }
+
+            Instantiate(_particle, transform.position, transform.rotation);
+
+            if (_testForce) _rb.AddForce(_dir * _speed, ForceMode2D.Impulse);
+            else _rb.velocity = _dir * _speed;
+
+            Teleport?.Invoke();
+
+            availableTP--;
+            _frameCounter = 0;
         }
     }
 
     void FixedUpdate()
     {
         if (PlayerMain.Instance.Movement.IsGrounded) availableTP = _maxTP;
-
+        _frameCounter++;
     }
 }

@@ -25,7 +25,7 @@ public class PlayerSlam : MonoBehaviour
 
     void OnSlam(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
+        if (ctx.performed && !_tr.enabled)
         {
             _rb.velocity = new Vector2(_rb.velocity.x, 0);
             _rb.AddForce(new Vector2(0, _initJumpForce), ForceMode2D.Impulse);
