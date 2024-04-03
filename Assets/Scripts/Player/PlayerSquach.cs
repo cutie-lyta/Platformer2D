@@ -9,6 +9,11 @@ public class PlayerSquach : MonoBehaviour
     private void Awake()
     {
         PlayerMain.Instance.Input.Slam += OnSlam;
+<<<<<<< Updated upstream
+=======
+        PlayerMain.Instance.Teleport.Teleport += OnPlayerFaitBouinpe;
+        _scale = transform.localScale;
+>>>>>>> Stashed changes
     }
 
     void OnSlam(InputAction.CallbackContext ctx)
@@ -32,9 +37,25 @@ public class PlayerSquach : MonoBehaviour
 
     }
 
+<<<<<<< Updated upstream
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (isSlamming)
+=======
+    /// <summary>
+    /// Fait le bouinpe
+    /// </summary>
+    void OnPlayerFaitBouinpe()
+    {
+        transform.localScale = Vector3.zero;
+
+        transform.DOScale(_scale, 0.30f).SetEase(Ease.InOutBack);
+    }
+
+    private void FixedUpdate()
+    {
+        if (PlayerMain.Instance.Movement.IsGrounded && isSlamming && _framecounter > 4)
+>>>>>>> Stashed changes
         {
             isSlamming = false;
             SlamSquach();
