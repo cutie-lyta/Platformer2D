@@ -376,6 +376,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &934596793 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2253742605683956693, guid: 150b9c778606ff34998c5a1da0aa4c10, type: 3}
+  m_PrefabInstance: {fileID: 1186461756181131145}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1020713433 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4634033474993795521, guid: 150b9c778606ff34998c5a1da0aa4c10, type: 3}
@@ -771,7 +776,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -790,7 +795,7 @@ Transform:
   m_GameObject: {fileID: 1764378150}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.92, y: -3.27, z: 0}
+  m_LocalPosition: {x: -4.56, y: -3.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1265,9 +1270,13 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: -0.45697218
       objectReference: {fileID: 0}
+    - target: {fileID: 1950328479529345119, guid: 150b9c778606ff34998c5a1da0aa4c10, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2007846218312947434, guid: 150b9c778606ff34998c5a1da0aa4c10, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.63
+      value: 5.63
       objectReference: {fileID: 0}
     - target: {fileID: 2007846218312947434, guid: 150b9c778606ff34998c5a1da0aa4c10, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1317,6 +1326,10 @@ PrefabInstance:
       propertyPath: _particule
       value: 
       objectReference: {fileID: 9081079273953894127, guid: bdad823922910a945b371ed5d1196d44, type: 3}
+    - target: {fileID: 8990446592428597555, guid: 150b9c778606ff34998c5a1da0aa4c10, type: 3}
+      propertyPath: _exclamation
+      value: 
+      objectReference: {fileID: 934596793}
     - target: {fileID: 8990446592428597555, guid: 150b9c778606ff34998c5a1da0aa4c10, type: 3}
       propertyPath: _acceleration
       value: 15
