@@ -9,6 +9,7 @@ TagManager:
   - TransparentFX
   - Ignore Raycast
   - Ground
+  - Particule
   - Water
   - UI
   - 
@@ -38,6 +39,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Particule
+    uniqueID: 4200478509
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
