@@ -1,6 +1,5 @@
 using DG.Tweening;
 using UnityEngine;
-using static UnityEngine.ParticleSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class EnemyBehaviour : MonoBehaviour
@@ -10,8 +9,11 @@ public class EnemyBehaviour : MonoBehaviour
     private Vector3 _dir = Vector3.right;
     private float _leftPos;
     private float _rightPos;
+
     [SerializeField]
     private GameObject _particule;
+    [SerializeField]
+    private GameObject _exclamation;
     [SerializeField]
     private float _distance;
     [SerializeField]
@@ -56,16 +58,17 @@ public class EnemyBehaviour : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
-        {                
+        {
             if (_jump == false)
             {
-                transform.DOLocalJump(transform.position + (Vector3.up*0.5f), 0.1f, 1, 0.1f);
+                _exclamation.SetActive(true);
+                transform.DOLocalJump(transform.position + (Vector3.up * 0.3f), 0.05f, 1, 0.05f).onComplete = () => { _exclamation.SetActive(false);};
                 _particule.transform.position = new Vector3(0, 0.5f, 0);
                 Instantiate(_particule, this.transform);
             }
+
             _jump = true;
             _trigger = true;
-
             _rb.velocity = (collision.transform.position - this.transform.position).normalized * _speed;
             _dir = (collision.transform.position - this.transform.position).normalized;
         }
@@ -75,6 +78,5 @@ public class EnemyBehaviour : MonoBehaviour
     {
         _trigger = false;
         _jump = false;
-
     }
 }
