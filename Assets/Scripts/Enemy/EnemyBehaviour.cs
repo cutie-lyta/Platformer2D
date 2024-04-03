@@ -9,6 +9,7 @@ public class EnemyBehaviour : MonoBehaviour
     private Vector3 _dir = Vector3.right;
     private float _leftPos;
     private float _rightPos;
+    private GameObject _part;
 
     [SerializeField]
     private GameObject _particule;
@@ -62,21 +63,30 @@ public class EnemyBehaviour : MonoBehaviour
             if (_jump == false)
             {
                 _exclamation.SetActive(true);
-                transform.DOLocalJump(transform.position + (Vector3.up * 0.3f), 0.05f, 1, 0.05f).onComplete = () => { _exclamation.SetActive(false);};
+                transform.DOLocalJump(transform.position + (Vector3.up * 0.5f), 0.05f, 1, 0.03f).onComplete = () => { _exclamation.SetActive(false);};
                 _particule.transform.position = new Vector3(0, 0.5f, 0);
-                Instantiate(_particule, this.transform);
+                _part = Instantiate(_particule, this.transform);
             }
 
             _jump = true;
             _trigger = true;
             _rb.velocity = (collision.transform.position - this.transform.position).normalized * _speed;
             _dir = (collision.transform.position - this.transform.position).normalized;
+            _speed *= 2;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        _trigger = false;
-        _jump = false;
+        if (collision.CompareTag("Player"))
+        {
+            _trigger = false;
+            _jump = false;
+            _speed /= 2;
+            var enemyPos = this.transform.position.x;
+            _leftPos = enemyPos - _distance;
+            _rightPos = enemyPos + _distance;
+            Destroy(_part.gameObject);
+        }
     }
 }
