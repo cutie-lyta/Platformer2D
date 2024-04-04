@@ -12,9 +12,6 @@ public class EnemyDeath : MonoBehaviour
         _enemyBehaviour.enabled = false;
         _particule.transform.position = this.transform.position;
         Instantiate(_particule);
-
-        Debug.Log(this.transform.position);
-        Debug.Log(_particule.transform.position);
         Destroy(this.gameObject);
     }
 }

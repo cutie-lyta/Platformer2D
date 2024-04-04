@@ -4,6 +4,7 @@ public class PlayerMain : MonoBehaviour
 {
     public PlayerMovement Movement { get; private set; }
     public PlayerInputHandler Input { get; private set; }
+    public PlayerTeleport Teleport { get; private set; }
 
     public static PlayerMain Instance;
 
@@ -18,5 +19,6 @@ public class PlayerMain : MonoBehaviour
 
         Movement = GetComponent<PlayerMovement>();
         Input = GetComponent<PlayerInputHandler>();
+        Teleport = GetComponent<PlayerTeleport>();
     }
 }

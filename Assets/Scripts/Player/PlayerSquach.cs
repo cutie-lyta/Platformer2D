@@ -5,13 +5,13 @@ using DG.Tweening;
 public class PlayerSquach : MonoBehaviour
 {
     private bool isSlamming;
-    private int _framecounter;
     private Vector3 _scale;
+    private int _framecounter;
 
     private void Awake()
     {
         PlayerMain.Instance.Input.Slam += OnSlam;
-        PlayerMain.Instance.Input.Teleport += OnPlayerFaitBouinpe;
+        PlayerMain.Instance.Teleport.Teleport += OnPlayerFaitBouinpe;
         _scale = transform.localScale;
     }
 
@@ -40,14 +40,11 @@ public class PlayerSquach : MonoBehaviour
     /// <summary>
     /// Fait le bouinpe
     /// </summary>
-    void OnPlayerFaitBouinpe(InputAction.CallbackContext ctx)
+    void OnPlayerFaitBouinpe()
     {
-        if (ctx.performed)
-        {
-            transform.localScale = Vector3.zero;
+        transform.localScale = Vector3.zero;
 
-            transform.DOScale(_scale, 0.4f).SetEase(Ease.InOutBack);
-        }
+        transform.DOScale(_scale, 0.30f).SetEase(Ease.InOutBack);
     }
 
     private void FixedUpdate()
