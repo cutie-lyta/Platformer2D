@@ -324,6 +324,7 @@ MonoBehaviour:
   _particle: {fileID: 4594040843463181209, guid: 3c98d91ddc672014ca3374cec78c8d1a, type: 3}
   _trail: {fileID: 4594040843463181209, guid: 3c98d91ddc672014ca3374cec78c8d1a, type: 3}
   _material: {fileID: 2100000, guid: 3ca7547c3071535478e13a4ad4360851, type: 2}
+  _arrow: {fileID: 8915191329872190669, guid: 04d346f3f0ab4b6488ea17679c0eac30, type: 3}
   _testForce: 0
 --- !u!114 &8311636056647381464
 MonoBehaviour:
@@ -356,6 +357,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initJumpForce: 200
   _gravScale: 18
+  _framesForSlamStage: 140000001e0000002d000000
   _trigger: {fileID: 1052970897772190499}
 --- !u!96 &6444362779545880137
 TrailRenderer:
@@ -612,7 +614,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2.38
+  m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 2d375efa00000000

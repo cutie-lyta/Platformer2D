@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerSlam : MonoBehaviour
 {
-    public event Action Slamming;
+    public event Action<int> Slamming;
 
 
     [SerializeField]
@@ -35,6 +35,7 @@ public class PlayerSlam : MonoBehaviour
         _trigger.enabled = false;
 
         PlayerMain.Instance.Input.Slam += InitiateSlam;
+        PlayerMain.Instance.Movement.PlayerLand += PerformingSlamificationOnThee;    
     }
 
     private void FixedUpdate()
@@ -80,6 +81,6 @@ public class PlayerSlam : MonoBehaviour
         _trigger.enabled = false;
         this.transform.rotation = Quaternion.Euler(0, 0, 0);
 
-        Slamming?.Invoke();
+        Slamming?.Invoke(_slamStage);
     }
 }
