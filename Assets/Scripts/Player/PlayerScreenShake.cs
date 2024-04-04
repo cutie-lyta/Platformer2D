@@ -7,10 +7,7 @@ public class PlayerScreenShake : MonoBehaviour
     [SerializeField]
     private Vector3 _impulseDirection;
     [SerializeField]
-    private float _impulseStrength;
-
-    private bool _isSlamming;
-    private int _framecounter;
+    private float _impulseStrengthBase;
 
     private CinemachineImpulseSource _impulse;
 
@@ -19,27 +16,11 @@ public class PlayerScreenShake : MonoBehaviour
     {
         _impulse = GetComponent<CinemachineImpulseSource>();
 
-        PlayerMain.Instance.Input.Slam += OnSlam;
+        PlayerMain.Instance.Slam.Slamming += SlamShake;
     }
 
-    void OnSlam(InputAction.CallbackContext ctx)
+    private void SlamShake(int strength)
     {
-        _isSlamming = true;
-        _framecounter = 0;
-    }
-
-    private void FixedUpdate()
-    {
-        if (PlayerMain.Instance.Movement.IsGrounded && _isSlamming && _framecounter > 4)
-        {
-            _isSlamming = false;
-            SlamShake();
-        }
-        _framecounter++;
-    }
-
-    private void SlamShake()
-    {
-        _impulse.GenerateImpulse(_impulseDirection.normalized * _impulseStrength);
+        _impulse.GenerateImpulse(_impulseDirection.normalized * (strength * 2 + _impulseStrengthBase));
     }
 }

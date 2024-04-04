@@ -62,8 +62,10 @@ public class PlayerSlam : MonoBehaviour
             _rb.AddForce(new Vector2(0, _initJumpForce), ForceMode2D.Impulse);
             _rb.gravityScale = _gravScale / 2;
 
-            Invoke("BeginSlam", 0.3f);
+            PlayerMain.Instance.Input.Slam -= InitiateSlam;
             PlayerMain.Instance.Movement.PlayerLand += PerformingSlamificationOnThee;
+
+            Invoke("BeginSlam", 0.3f);
         }
     }
 
@@ -81,6 +83,7 @@ public class PlayerSlam : MonoBehaviour
         _trigger.enabled = false;
         this.transform.rotation = Quaternion.Euler(0, 0, 0);
 
+        PlayerMain.Instance.Input.Slam += InitiateSlam;
         PlayerMain.Instance.Movement.PlayerLand -= PerformingSlamificationOnThee;
 
         Slamming?.Invoke(_slamStage);

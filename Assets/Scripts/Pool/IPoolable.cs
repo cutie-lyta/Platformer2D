@@ -14,7 +14,7 @@ public interface IPoolable
     /// Uses the Poolable
     /// </summary>
     /// <param name="position"></param>
-    public void Use(Vector3 position, Quaternion rotation);
+    public void Use(Vector3 position, Quaternion rotation, Vector3 scale);
 
     /// <summary>
     /// Unuses the Poolable

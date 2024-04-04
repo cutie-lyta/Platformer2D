@@ -62,10 +62,8 @@ public class PlayerTeleport : MonoBehaviour
         if (readDir != Vector2.zero)
         {
             var angle = Mathf.Atan2(readDir.x, -readDir.y) * (180 / Mathf.PI) + 180;
-            print(angle);
 
             angle = Math.QuantizeAngle(angle, 12);
-            print(angle);
             _angle = angle;
             _arrow.SetActive(true);
             _arrow.transform.rotation = Quaternion.Euler(0, 0, _angle);
@@ -89,23 +87,22 @@ public class PlayerTeleport : MonoBehaviour
             if (_dir == Vector2.zero) return;
 
             var vect = transform.position + (Vector3)(_dir * _distance);
-            print(vect);
 
-            var cast = Physics2D.Raycast(vect, _dir, 0.1f);
-
-            print(cast.collider);
+            var cast = Physics2D.Raycast(vect, _dir, -0.001f);
 
             var trail = Instantiate(_trail, this.transform.position, Quaternion.Euler(0, 0, Mathf.Atan2(_dir.x, -_dir.y) * (180 / Mathf.PI)));
 
             if (cast.collider == null)
             {
                 transform.position += (Vector3)(_dir * _distance);
+
             }
             else
             {
                 var newCast = Physics2D.Raycast(transform.position, _dir, _distance);
                 if (transform.position == (Vector3)(newCast.point - (_dir * 0.75f))) return;
                 transform.position = newCast.point - (_dir * 0.75f);
+
             }
 
             //Instantiate(_particle, transform.position, transform.rotation);
@@ -115,6 +112,7 @@ public class PlayerTeleport : MonoBehaviour
 
             if (_testForce) _rb.AddForce(_dir * _speed, ForceMode2D.Impulse);
             else _rb.velocity = _dir * _speed;
+            print($"{_rb.velocity} = {_dir} * {_speed}");
 
             Teleport?.Invoke();
 
