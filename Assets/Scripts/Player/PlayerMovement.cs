@@ -81,8 +81,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (!_prevIsGrounded && _prevIsGrounded != IsGrounded)
         {
-
-            Debug.Log("I landed");
             PlayerLand?.Invoke();
         }
     }
