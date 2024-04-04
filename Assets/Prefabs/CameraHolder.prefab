@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1105776339624151390}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.1019187, y: -2.099842, z: -12.054403}
+  m_LocalPosition: {x: 14.776333, y: 3.220158, z: -12.054403}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -258,7 +258,7 @@ Transform:
   m_GameObject: {fileID: 6816616016172747991}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.1253757, y: 1.5665679, z: -12.054403}
+  m_LocalPosition: {x: 14.776333, y: 3.220158, z: -12.054403}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -274,7 +274,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.18867922, g: 0.13374469, b: 0.10039158, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -411,7 +411,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6993512846160483043}
   - component: {fileID: 881789649600037779}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Confiner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -477,10 +477,12 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 21.18084, y: 21.367886}
-      - {x: -29.782534, y: 20.76686}
-      - {x: -29.322296, y: -2.653826}
-      - {x: -29.351952, y: -4.784516}
-      - {x: 21.93923, y: -4.6807456}
-      - {x: 21.448444, y: -2.6517167}
+    - - {x: 23.241386, y: 84.03913}
+      - {x: -12.325645, y: 84.17539}
+      - {x: -13.391939, y: 83.17532}
+      - {x: -12.984238, y: -6.259086}
+      - {x: 91.43379, y: -6.1049676}
+      - {x: 92.029015, y: 63.26463}
+      - {x: 91.920074, y: 84.16448}
+      - {x: 71.08977, y: 84.1072}
   m_UseDelaunayMesh: 0
