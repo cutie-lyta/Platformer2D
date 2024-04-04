@@ -78,6 +78,8 @@ public class PlayerMovement : MonoBehaviour
         {
             Destroy(_part);
         }
+        
+        
 
         if (!_prevIsGrounded && _prevIsGrounded != IsGrounded)
         {
