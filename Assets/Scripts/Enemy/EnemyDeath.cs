@@ -10,8 +10,8 @@ public class EnemyDeath : MonoBehaviour
     public void Kill()
     {
         _enemyBehaviour.enabled = false;
-        _particule.transform.position = this.transform.position;
-        Instantiate(_particule);
+        var go = Instantiate(_particule);
+        go.transform.position = this.transform.position;
         Destroy(this.gameObject);
     }
 }

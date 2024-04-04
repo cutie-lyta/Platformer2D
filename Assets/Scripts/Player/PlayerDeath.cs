@@ -36,10 +36,10 @@ public class PlayerDeath : MonoBehaviour
             _redScreen.DOFade(0.0f, 0.5f).SetUpdate(true).onComplete = () =>
             {
                 // Yoann met le screen shake stp
-                _particule.transform.position = this.transform.position;
+                var go = Instantiate(_particule);
+                go.transform.position = this.transform.position;
                 _spriteRenderer.DOFade(0.0f, 0.1f).SetUpdate(true);
                 Time.timeScale = 1.0f;
-                Instantiate(_particule);
                 Destroy(PlayerMain.Instance);
                 StartCoroutine(WaitForLoad());
             };
