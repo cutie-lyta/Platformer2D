@@ -74,13 +74,10 @@ public class PlayerMovement : MonoBehaviour
                 _part = Instantiate(_partMovement, this.transform);
             }
         }
-
         else
         {
             Destroy(_part);
         }
-        
-        
 
         if (!_prevIsGrounded && _prevIsGrounded != IsGrounded)
         {
