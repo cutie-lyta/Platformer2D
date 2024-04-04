@@ -74,7 +74,6 @@ public class PlayerTeleport : MonoBehaviour
             if (cast.collider == null)
             {
                 transform.position += (Vector3)(_dir * _distance);
-
             }
             else
             {

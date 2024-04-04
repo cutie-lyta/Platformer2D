@@ -30,6 +30,7 @@ public class PlayerDeath : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            PlayerMain.Instance.Input.SendMessage("StopInput");
             Time.timeScale = 0.0f;
             _redScreen.DOFade(80.0f, 0.5f).SetUpdate(true);
             _redScreen.DOFade(0.0f, 0.5f).SetUpdate(true).onComplete = () =>
