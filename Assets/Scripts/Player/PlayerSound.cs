@@ -28,7 +28,7 @@ public class PlayerSound : MonoBehaviour
 
         };
 
-        PlayerMain.Instance.Slam.Slamming += () =>
+        PlayerMain.Instance.Slam.Slamming += (i) =>
         {
             source.clip = explosion;
             source.loop = false;
