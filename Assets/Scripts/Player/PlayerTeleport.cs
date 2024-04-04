@@ -22,7 +22,7 @@ public class PlayerTeleport : MonoBehaviour
 
     [SerializeField]
     private GameObject _trail;
-    
+
     [SerializeField]
     private Material _material;
 
@@ -53,7 +53,20 @@ public class PlayerTeleport : MonoBehaviour
 
     void OnMovement(InputAction.CallbackContext ctx)
     {
-        _dir = ctx.ReadValue<Vector2>().normalized;
+        var readDir = ctx.ReadValue<Vector2>().normalized;
+
+        if (readDir != Vector2.zero)
+        {
+            var angle = Mathf.Atan2(readDir.x, readDir.y) * (180 / Mathf.PI) + 180;
+            print(angle);
+
+            angle = Math.QuantizeAngle(angle, 12);
+            print(angle);
+
+            angle *= (Mathf.PI / 180);
+            _dir = new Vector2(-Mathf.Sin(angle), -Mathf.Cos(angle));
+        }
+
     }
 
     void OnTeleport(InputAction.CallbackContext ctx)
@@ -78,13 +91,14 @@ public class PlayerTeleport : MonoBehaviour
             else
             {
                 var newCast = Physics2D.Raycast(transform.position, _dir, _distance);
+                if (transform.position == (Vector3)(newCast.point - (_dir * 0.75f))) return;
                 transform.position = newCast.point - (_dir * 0.75f);
             }
 
             //Instantiate(_particle, transform.position, transform.rotation);
             trail.transform.DOMove(transform.position, .2f);
 
-			StartCoroutine(Glow());
+            StartCoroutine(Glow());
 
             if (_testForce) _rb.AddForce(_dir * _speed, ForceMode2D.Impulse);
             else _rb.velocity = _dir * _speed;
@@ -105,7 +119,7 @@ public class PlayerTeleport : MonoBehaviour
     public IEnumerator Glow()
     {
         _spriteRenderer.material = _material;
-        DOTween.To(() => _spriteRenderer.material.GetFloat("_Intensity"), x => _spriteRenderer.material.SetFloat("_Intensity",x), 0.0f, 0.3f);
+        DOTween.To(() => _spriteRenderer.material.GetFloat("_Intensity"), x => _spriteRenderer.material.SetFloat("_Intensity", x), 0.0f, 0.3f);
         yield return new WaitForSeconds(0.3f);
         _spriteRenderer.material = _default;
     }

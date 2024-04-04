@@ -38,21 +38,21 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void Movement()
     {
-        if(this.transform.position.x >= _rightPos && _trigger == false)
+        if (this.transform.position.x >= _rightPos && _trigger == false)
         {
             _dir = Vector3.left;
             _rb.velocity = _rb.velocity * -1;
         }
 
-        if(this.transform.position.x <= _leftPos && _trigger == false)
+        if (this.transform.position.x <= _leftPos && _trigger == false)
         {
             _dir = Vector3.right;
             _rb.velocity = _rb.velocity * -1;
         }
-        
-        if(Mathf.Abs(_rb.velocity.x) <= Mathf.Abs(_speed))
+
+        if (Mathf.Abs(_rb.velocity.x) <= Mathf.Abs(_speed))
         {
-            _rb.AddForce(_dir*_acceleration, ForceMode2D.Force);  
+            _rb.AddForce(_dir * _acceleration, ForceMode2D.Force);
         }
     }
 
@@ -63,7 +63,7 @@ public class EnemyBehaviour : MonoBehaviour
             if (_jump == false)
             {
                 _exclamation.SetActive(true);
-                transform.DOLocalJump(transform.position + (Vector3.up * 0.5f), 0.05f, 1, 0.03f).onComplete = () => { _exclamation.SetActive(false);};
+                transform.DOLocalJump(transform.position + (Vector3.up * 0.5f), 0.05f, 1, 0.03f).onComplete = () => { _exclamation.SetActive(false); };
                 _particule.transform.position = new Vector3(0, 0.5f, 0);
                 _part = Instantiate(_particule, this.transform);
             }
@@ -86,7 +86,6 @@ public class EnemyBehaviour : MonoBehaviour
             var enemyPos = this.transform.position.x;
             _leftPos = enemyPos - _distance;
             _rightPos = enemyPos + _distance;
-            Destroy(_part.gameObject);
         }
     }
 }

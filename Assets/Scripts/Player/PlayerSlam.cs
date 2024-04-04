@@ -47,6 +47,7 @@ public class PlayerSlam : MonoBehaviour
         {
             _tr.enabled = false;
             _trigger.enabled = false;
+            this.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
         _frameCounter++;
     }
