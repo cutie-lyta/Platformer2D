@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.ParticleSystem;
@@ -6,6 +7,8 @@ using static UnityEngine.ParticleSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
+    public event Action PlayerLand;
+
     [SerializeField]
     private float _acceleration;
     [SerializeField]
@@ -27,10 +30,10 @@ public class PlayerMovement : MonoBehaviour
     private float _initDrag;
     private float _initGravScale;
 
-    public bool IsGrounded { get; private set; }
+    public bool IsGrounded { get; private set; } = true;
 
     // Local Use
-
+    private bool _prevIsGrounded;
 
     private void Awake()
     {
@@ -46,6 +49,8 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         _rb.AddForce(_dir * _acceleration, ForceMode2D.Force);
+
+        _prevIsGrounded = IsGrounded;
 
         IsGrounded = Physics2D.Raycast(transform.position, Vector2.down, (_playerHeight * 0.5f) + 0.05f, _whatIsGround);
 
@@ -74,7 +79,15 @@ public class PlayerMovement : MonoBehaviour
         {
             Destroy(_part);
         }
+        
+        
 
+        if (!_prevIsGrounded && _prevIsGrounded != IsGrounded)
+        {
+
+            Debug.Log("I landed");
+            PlayerLand?.Invoke();
+        }
     }
 
     private void OnMovement(InputAction.CallbackContext ctx)
