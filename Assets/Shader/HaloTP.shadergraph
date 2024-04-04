@@ -4,16 +4,13 @@
     "m_ObjectId": "7b39c739c642454a90c86c156a0a031a",
     "m_Properties": [
         {
-            "m_Id": "f04180dadfcc4e599ac14897fbf94b47"
-        },
-        {
             "m_Id": "45e20d7905394411ae9fb5dafdf8b820"
         },
         {
             "m_Id": "8b983a9242634749937d6f78b828fe60"
         },
         {
-            "m_Id": "47468156e3f24988bcbc9583bba61315"
+            "m_Id": "1dc217d7c3dd45ebbddbf4c8e9181039"
         }
     ],
     "m_Keywords": [],
@@ -285,6 +282,36 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Texture2DShaderProperty",
+    "m_ObjectId": "1dc217d7c3dd45ebbddbf4c8e9181039",
+    "m_Guid": {
+        "m_GuidSerialized": "fe6c1f26-a1df-4ce2-9891-b2e028197310"
+    },
+    "m_Name": "MainTex",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "MainTex",
+    "m_DefaultReferenceName": "_MainTex",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_Guid": ""
+    },
+    "isMainTexture": false,
+    "useTilingAndOffset": false,
+    "m_Modifiable": true,
+    "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.BlockNode",
     "m_ObjectId": "1f138bf3a88246ff89e27ac905b6fe58",
     "m_Group": {
@@ -549,36 +576,6 @@
 }
 
 {
-    "m_SGVersion": 3,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
-    "m_ObjectId": "47468156e3f24988bcbc9583bba61315",
-    "m_Guid": {
-        "m_GuidSerialized": "92600dd7-4c4e-4782-abb6-f30c22994797"
-    },
-    "m_Name": "Color (1)",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Color (1)",
-    "m_DefaultReferenceName": "_Color_1",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_DismissedVersion": 0,
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": {
-        "r": 0.0,
-        "g": 0.0,
-        "b": 0.0,
-        "a": 0.0
-    },
-    "isMainColor": false,
-    "m_ColorMode": 0
-}
-
-{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.TangentMaterialSlot",
     "m_ObjectId": "56f1c0239e284fd4951516db49af8b0b",
@@ -792,16 +789,13 @@
     "m_Name": "",
     "m_ChildObjectList": [
         {
-            "m_Id": "f04180dadfcc4e599ac14897fbf94b47"
-        },
-        {
             "m_Id": "45e20d7905394411ae9fb5dafdf8b820"
         },
         {
             "m_Id": "8b983a9242634749937d6f78b828fe60"
         },
         {
-            "m_Id": "47468156e3f24988bcbc9583bba61315"
+            "m_Id": "1dc217d7c3dd45ebbddbf4c8e9181039"
         }
     ]
 }
@@ -1223,36 +1217,6 @@
     "m_Property": {
         "m_Id": "8b983a9242634749937d6f78b828fe60"
     }
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.Texture2DShaderProperty",
-    "m_ObjectId": "f04180dadfcc4e599ac14897fbf94b47",
-    "m_Guid": {
-        "m_GuidSerialized": "144ed605-2e1b-48d0-89bd-8bf2d21406c4"
-    },
-    "m_Name": "MainTex",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "MainTex",
-    "m_DefaultReferenceName": "_MainTex",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_DismissedVersion": 0,
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": {
-        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
-        "m_Guid": ""
-    },
-    "isMainTexture": false,
-    "useTilingAndOffset": false,
-    "m_Modifiable": true,
-    "m_DefaultType": 0
 }
 
 {
