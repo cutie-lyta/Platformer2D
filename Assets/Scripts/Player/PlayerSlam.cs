@@ -35,7 +35,6 @@ public class PlayerSlam : MonoBehaviour
         _trigger.enabled = false;
 
         PlayerMain.Instance.Input.Slam += InitiateSlam;
-        PlayerMain.Instance.Movement.PlayerLand += PerformingSlamificationOnThee;    
     }
 
     private void FixedUpdate()
@@ -64,6 +63,7 @@ public class PlayerSlam : MonoBehaviour
             _rb.gravityScale = _gravScale / 2;
 
             Invoke("BeginSlam", 0.3f);
+            PlayerMain.Instance.Movement.PlayerLand += PerformingSlamificationOnThee;
         }
     }
 
@@ -80,6 +80,8 @@ public class PlayerSlam : MonoBehaviour
         _tr.enabled = false;
         _trigger.enabled = false;
         this.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        PlayerMain.Instance.Movement.PlayerLand -= PerformingSlamificationOnThee;
 
         Slamming?.Invoke(_slamStage);
     }
