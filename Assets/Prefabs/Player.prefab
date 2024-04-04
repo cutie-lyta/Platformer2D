@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7840566257145731831}
   - component: {fileID: 1052970897772190499}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 1805421563589054058}
   - component: {fileID: 4028796818594947604}
   - component: {fileID: 8874769370061595416}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -573,7 +573,7 @@ GameObject:
   m_Component:
   - component: {fileID: 622543002363724960}
   - component: {fileID: 2092426954613195612}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -656,7 +656,7 @@ GameObject:
   - component: {fileID: 2751139688207545673}
   - component: {fileID: 5335515081170297704}
   - component: {fileID: 4902953308246950779}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: SlamExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
