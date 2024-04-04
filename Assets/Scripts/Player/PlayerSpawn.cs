@@ -19,7 +19,6 @@ public class PlayerSpawn : MonoBehaviour
     }
     void Start()
     {
-        _effectSpawn.Play();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _default = _spriteRenderer.material;
         StartCoroutine(Spawn());
@@ -27,6 +26,7 @@ public class PlayerSpawn : MonoBehaviour
 
     public IEnumerator Spawn()
     {
+        _effectSpawn.Play();
         _spriteRenderer.material = _material;
         DOTween.To(() => _spriteRenderer.material.GetFloat("_Intensity"), x => _spriteRenderer.material.SetFloat("_Intensity", x), 0.0f, 0.3f);
         yield return new WaitForSeconds(0.3f);
