@@ -1,8 +1,8 @@
-using System;
+using DG.Tweening;
+using System.Collections;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using DG.Tweening;
 
 public class PlayerTeleport : MonoBehaviour
 {
@@ -22,12 +22,17 @@ public class PlayerTeleport : MonoBehaviour
 
     [SerializeField]
     private GameObject _trail;
+    
+    [SerializeField]
+    private Material _material;
 
     [Tooltip("Debug flag -> AddForce or Velocity")]
     [SerializeField]
     private bool _testForce;
 
     private Rigidbody2D _rb;
+    private SpriteRenderer _spriteRenderer;
+    private Material _default;
 
     Vector2 _dir;
 
@@ -39,6 +44,8 @@ public class PlayerTeleport : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _default = _spriteRenderer.material;
         PlayerMain.Instance.Input.Teleport += OnTeleport;
         PlayerMain.Instance.Input.Movement += OnMovement;
         availableTP = _maxTP;
@@ -67,6 +74,7 @@ public class PlayerTeleport : MonoBehaviour
             if (cast.collider == null)
             {
                 transform.position += (Vector3)(_dir * _distance);
+
             }
             else
             {
@@ -77,6 +85,7 @@ public class PlayerTeleport : MonoBehaviour
             //Instantiate(_particle, transform.position, transform.rotation);
             trail.transform.DOMove(transform.position, .2f);
 
+			StartCoroutine(Glow());
 
             if (_testForce) _rb.AddForce(_dir * _speed, ForceMode2D.Impulse);
             else _rb.velocity = _dir * _speed;
@@ -92,5 +101,13 @@ public class PlayerTeleport : MonoBehaviour
     {
         if (PlayerMain.Instance.Movement.IsGrounded) availableTP = _maxTP;
         _frameCounter++;
+    }
+
+    public IEnumerator Glow()
+    {
+        _spriteRenderer.material = _material;
+        DOTween.To(() => _spriteRenderer.material.GetFloat("_Intensity"), x => _spriteRenderer.material.SetFloat("_Intensity",x), 0.0f, 0.3f);
+        yield return new WaitForSeconds(0.3f);
+        _spriteRenderer.material = _default;
     }
 }
