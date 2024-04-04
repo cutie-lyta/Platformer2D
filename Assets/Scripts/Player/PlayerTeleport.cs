@@ -22,7 +22,7 @@ public class PlayerTeleport : MonoBehaviour
 
     [SerializeField]
     private GameObject _trail;
-    
+
     [Tooltip("Debug flag -> AddForce or Velocity")]
     [SerializeField]
     private bool _testForce;
@@ -62,13 +62,11 @@ public class PlayerTeleport : MonoBehaviour
 
             print(cast.collider);
 
-            var trail = Instantiate(_trail, this.transform.position, this.transform.rotation);
+            var trail = Instantiate(_trail, this.transform.position, Quaternion.Euler(0, 0, Mathf.Atan2(_dir.x, -_dir.y) * (180 / Mathf.PI)));
 
             if (cast.collider == null)
             {
                 transform.position += (Vector3)(_dir * _distance);
-                Instantiate(_particle, transform.position, transform.rotation);
-
             }
             else
             {
@@ -76,8 +74,8 @@ public class PlayerTeleport : MonoBehaviour
                 transform.position = newCast.point - (_dir * 0.75f);
             }
 
-            Instantiate(_particle, transform.position, transform.rotation);
-            trail.transform.DOMove(transform.position, .1f);
+            //Instantiate(_particle, transform.position, transform.rotation);
+            trail.transform.DOMove(transform.position, .2f);
 
 
             if (_testForce) _rb.AddForce(_dir * _speed, ForceMode2D.Impulse);
