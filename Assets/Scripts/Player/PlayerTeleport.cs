@@ -22,9 +22,12 @@ public class PlayerTeleport : MonoBehaviour
 
     [SerializeField]
     private GameObject _trail;
-    
+
     [SerializeField]
     private Material _material;
+
+    [SerializeField]
+    private GameObject _arrow;
 
     [Tooltip("Debug flag -> AddForce or Velocity")]
     [SerializeField]
@@ -33,6 +36,7 @@ public class PlayerTeleport : MonoBehaviour
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
     private Material _default;
+    private float _angle;
 
     Vector2 _dir;
 
@@ -41,7 +45,7 @@ public class PlayerTeleport : MonoBehaviour
     int _frameCounter;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -53,11 +57,33 @@ public class PlayerTeleport : MonoBehaviour
 
     void OnMovement(InputAction.CallbackContext ctx)
     {
-        _dir = ctx.ReadValue<Vector2>().normalized;
+        var readDir = ctx.ReadValue<Vector2>().normalized;
+
+        if (readDir != Vector2.zero)
+        {
+            var angle = Mathf.Atan2(readDir.x, -readDir.y) * (180 / Mathf.PI) + 180;
+            print(angle);
+
+            angle = Math.QuantizeAngle(angle, 12);
+            print(angle);
+            _angle = angle;
+            _arrow.SetActive(true);
+            _arrow.transform.rotation = Quaternion.Euler(0, 0, _angle);
+
+            angle *= (Mathf.PI / 180);
+            _dir = new Vector2(-Mathf.Sin(angle), Mathf.Cos(angle));
+            _arrow.transform.position = this.transform.position + (Vector3)_dir;
+        }
+
+        else
+        {
+            _arrow.SetActive(false);
+        }
     }
 
     void OnTeleport(InputAction.CallbackContext ctx)
     {
+        _arrow.SetActive(false);
         if (ctx.performed && availableTP > 0 && _frameCounter > 14)
         {
             if (_dir == Vector2.zero) return;
@@ -78,13 +104,14 @@ public class PlayerTeleport : MonoBehaviour
             else
             {
                 var newCast = Physics2D.Raycast(transform.position, _dir, _distance);
+                if (transform.position == (Vector3)(newCast.point - (_dir * 0.75f))) return;
                 transform.position = newCast.point - (_dir * 0.75f);
             }
 
             //Instantiate(_particle, transform.position, transform.rotation);
             trail.transform.DOMove(transform.position, .2f);
 
-			StartCoroutine(Glow());
+            StartCoroutine(Glow());
 
             if (_testForce) _rb.AddForce(_dir * _speed, ForceMode2D.Impulse);
             else _rb.velocity = _dir * _speed;
@@ -105,7 +132,7 @@ public class PlayerTeleport : MonoBehaviour
     public IEnumerator Glow()
     {
         _spriteRenderer.material = _material;
-        DOTween.To(() => _spriteRenderer.material.GetFloat("_Intensity"), x => _spriteRenderer.material.SetFloat("_Intensity",x), 0.0f, 0.3f);
+        DOTween.To(() => _spriteRenderer.material.GetFloat("_Intensity"), x => _spriteRenderer.material.SetFloat("_Intensity", x), 0.0f, 0.3f);
         yield return new WaitForSeconds(0.3f);
         _spriteRenderer.material = _default;
     }
