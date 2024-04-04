@@ -9,6 +9,9 @@ public class PlayerSlam : MonoBehaviour
     [SerializeField]
     private float _gravScale;
 
+    [SerializeField]
+    private Collider2D _trigger;
+
     private Rigidbody2D _rb;
     private TrailRenderer _tr;
     private int _frameCounter;
@@ -19,6 +22,7 @@ public class PlayerSlam : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _tr = GetComponent<TrailRenderer>();
         _tr.enabled = false;
+        _trigger.enabled = false;
 
         PlayerMain.Instance.Input.Slam += OnSlam;
     }
@@ -32,6 +36,7 @@ public class PlayerSlam : MonoBehaviour
             _rb.gravityScale = _gravScale / 2;
             _tr.enabled = true;
             _frameCounter = 0;
+            _trigger.enabled = true;
             Invoke("ChangeGravity", 0.3f);
         }
     }
@@ -41,6 +46,7 @@ public class PlayerSlam : MonoBehaviour
         if (PlayerMain.Instance.Movement.IsGrounded && _frameCounter > 4)
         {
             _tr.enabled = false;
+            _trigger.enabled = false;
         }
         _frameCounter++;
     }
