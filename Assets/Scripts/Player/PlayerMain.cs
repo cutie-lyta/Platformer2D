@@ -6,6 +6,8 @@ public class PlayerMain : MonoBehaviour
     public PlayerInputHandler Input { get; private set; }
     public PlayerTeleport Teleport { get; private set; }
 
+    public PlayerSlam Slam { get; private set; }
+
     public static PlayerMain Instance;
 
     private void Awake()
@@ -20,5 +22,6 @@ public class PlayerMain : MonoBehaviour
         Movement = GetComponent<PlayerMovement>();
         Input = GetComponent<PlayerInputHandler>();
         Teleport = GetComponent<PlayerTeleport>();
+        Slam = GetComponent<PlayerSlam>();
     }
 }

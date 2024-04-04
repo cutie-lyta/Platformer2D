@@ -19,8 +19,6 @@ public class PlayerSlam : MonoBehaviour
     [SerializeField]
     private Collider2D _trigger;
 
-
-
     private Rigidbody2D _rb;
     private TrailRenderer _tr;
 
@@ -43,7 +41,7 @@ public class PlayerSlam : MonoBehaviour
     {
         if (_slamming)
         {
-            if (_frameCounter >= _framesForSlamStage[_slamStage])
+            if (_slamStage < _framesForSlamStage.Length && _frameCounter >= _framesForSlamStage[_slamStage])
             {
                 _slamStage++;
                 Debug.Log("Slam Stage " + _slamStage);
