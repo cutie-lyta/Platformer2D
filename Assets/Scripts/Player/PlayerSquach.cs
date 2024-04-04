@@ -24,16 +24,17 @@ public class PlayerSquach : MonoBehaviour
     // Start is called before the first frame update
     void SlamSquach()
     {
-        var scale = transform.localScale;
         var position = transform.position;
 
         PlayerMain.Instance.Input.SendMessage("StopInput");
 
         Sequence seq = DOTween.Sequence();
-        seq.Append(transform.DOScale(new Vector3(scale.x * 1.5f, scale.y * 0.5f, 1), 0.1f));
-        seq.Insert(0, transform.DOMove(new Vector3(position.x, position.y - scale.y * 0.25f, position.z), 0.1f));
-        seq.Append(transform.DOScale(scale, 0.13f));
-        seq.Insert(0.1f, transform.DOMove(position, 0.13f)).OnComplete(() => PlayerMain.Instance.Input.SendMessage("StartInput"));
+        seq.Append(transform.DOScale(new Vector3(_scale.x * 1.5f, _scale.y * 0.5f, 1), 0.1f));
+        seq.Insert(0, transform.DOMove(new Vector3(position.x, position.y - _scale.y * 0.25f, position.z), 0.1f));
+        seq.Append(transform.DOScale(_scale, 0.13f));
+        seq.Insert(0.1f, transform.DOMove(position, 0.13f))
+            .OnComplete(() => { PlayerMain.Instance.Input.SendMessage("StartInput"); transform.localScale = _scale; })
+            .OnKill(() => { transform.localScale = _scale; });
 
     }
 
