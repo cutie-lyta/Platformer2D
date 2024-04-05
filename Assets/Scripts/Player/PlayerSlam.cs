@@ -73,6 +73,7 @@ public class PlayerSlam : MonoBehaviour
     {
         _slamming = true;
         _tr.enabled = true;
+        _trigger.enabled = true;
         _rb.gravityScale = _gravScale;
     }
 
@@ -81,6 +82,7 @@ public class PlayerSlam : MonoBehaviour
         _slamming = false;
         _tr.enabled = false;
         _trigger.enabled = false;
+
         this.transform.rotation = Quaternion.Euler(0, 0, 0);
 
         PlayerMain.Instance.Input.Slam += InitiateSlam;

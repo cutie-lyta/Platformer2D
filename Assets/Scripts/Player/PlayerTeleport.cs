@@ -70,7 +70,6 @@ public class PlayerTeleport : MonoBehaviour
 
             angle *= (Mathf.PI / 180);
             _dir = new Vector2(-Mathf.Sin(angle), Mathf.Cos(angle));
-            _arrow.transform.position = this.transform.position + (Vector3)_dir;
         }
 
         else
@@ -125,6 +124,8 @@ public class PlayerTeleport : MonoBehaviour
     {
         if (PlayerMain.Instance.Movement.IsGrounded) availableTP = _maxTP;
         _frameCounter++;
+        _arrow.transform.position = this.transform.position + (Vector3)_dir;
+
     }
 
     public IEnumerator Glow()
