@@ -32,13 +32,13 @@ public class PlayerDeath : MonoBehaviour
         {
             PlayerMain.Instance.Input.SendMessage("StopInput");
             Time.timeScale = 0;
-            _redScreen.DOFade(10.0f, 0.5f).SetUpdate(true);
+            _redScreen.DOFade(20.0f, 0.5f).SetUpdate(true);
             _redScreen.DOFade(0.0f, 0.5f).SetUpdate(true).onComplete = () =>
             {
                 var go = Instantiate(_particule);
                 go.transform.position = this.transform.position;
                 _spriteRenderer.DOFade(0.0f, 0.1f).SetUpdate(true);
-                Time.timeScale = 0.45f;
+                Time.timeScale = 1;
                 Destroy(PlayerMain.Instance);
                 StartCoroutine(WaitForLoad());
             };
