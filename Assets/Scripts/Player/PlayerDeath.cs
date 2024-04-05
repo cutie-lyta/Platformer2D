@@ -31,14 +31,14 @@ public class PlayerDeath : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             PlayerMain.Instance.Input.SendMessage("StopInput");
-            Time.timeScale = 0.0f;
+            Time.timeScale = 0;
             _redScreen.DOFade(10.0f, 0.5f).SetUpdate(true);
             _redScreen.DOFade(0.0f, 0.5f).SetUpdate(true).onComplete = () =>
             {
                 var go = Instantiate(_particule);
                 go.transform.position = this.transform.position;
                 _spriteRenderer.DOFade(0.0f, 0.1f).SetUpdate(true);
-                Time.timeScale = 0.5f;
+                Time.timeScale = 0.45f;
                 Destroy(PlayerMain.Instance);
                 StartCoroutine(WaitForLoad());
             };
