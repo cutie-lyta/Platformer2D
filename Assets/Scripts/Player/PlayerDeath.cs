@@ -13,6 +13,8 @@ public class PlayerDeath : MonoBehaviour
     private Image _redScreen;
     private SpriteRenderer _spriteRenderer;
 
+    private bool _invincible;
+
     private void Start()
     {
         _spriteRenderer = this.GetComponent<SpriteRenderer>();
@@ -28,7 +30,7 @@ public class PlayerDeath : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") && !_invincible)
         {
             PlayerMain.Instance.Input.SendMessage("StopInput");
             Time.timeScale = 0.0f;
@@ -50,5 +52,15 @@ public class PlayerDeath : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
         SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex));
+    }
+
+    public void Invincibility()
+    {
+        _invincible = true;
+    }
+
+    public void UnInvincibility()
+    {
+        _invincible = false;
     }
 }

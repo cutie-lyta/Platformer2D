@@ -5,7 +5,7 @@ public class PlayerMain : MonoBehaviour
     public PlayerMovement Movement { get; private set; }
     public PlayerInputHandler Input { get; private set; }
     public PlayerTeleport Teleport { get; private set; }
-
+    public PlayerDeath Death { get; private set; }
     public PlayerSlam Slam { get; private set; }
 
     public static PlayerMain Instance;
@@ -23,5 +23,6 @@ public class PlayerMain : MonoBehaviour
         Input = GetComponent<PlayerInputHandler>();
         Teleport = GetComponent<PlayerTeleport>();
         Slam = GetComponent<PlayerSlam>();
+        Death = GetComponent<PlayerDeath>();
     }
 }

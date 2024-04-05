@@ -82,7 +82,7 @@ public class PlayerTeleport : MonoBehaviour
     void OnTeleport(InputAction.CallbackContext ctx)
     {
         _arrow.SetActive(false);
-        if (ctx.performed && availableTP > 0 && _frameCounter > 14)
+        if (ctx.performed && availableTP > 0 && _frameCounter > 6)
         {
             if (_dir == Vector2.zero) return;
 
