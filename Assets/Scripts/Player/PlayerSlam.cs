@@ -1,11 +1,14 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerSlam : MonoBehaviour
 {
-    public event Action Slamming;
-
+    public event Action<int> Slamming;
+    public event Action<int> SlamEnded;
 
     [SerializeField]
     private float _initJumpForce;
@@ -15,7 +18,7 @@ public class PlayerSlam : MonoBehaviour
 
     [SerializeField]
     private int[] _framesForSlamStage;
-    
+
     [SerializeField]
     private Collider2D _trigger;
 
@@ -25,6 +28,11 @@ public class PlayerSlam : MonoBehaviour
     private bool _slamming;
     private int _slamStage = 0;
     private int _frameCounter;
+
+    private Coroutine _coroutine;
+
+    [SerializeField]
+    private Volume _globalVolume;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +57,7 @@ public class PlayerSlam : MonoBehaviour
 
             _frameCounter++;
         }
+        _trigger.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     void InitiateSlam(InputAction.CallbackContext ctx)
@@ -62,24 +71,53 @@ public class PlayerSlam : MonoBehaviour
             _rb.AddForce(new Vector2(0, _initJumpForce), ForceMode2D.Impulse);
             _rb.gravityScale = _gravScale / 2;
 
-            Invoke("BeginSlam", 0.3f);
+            PlayerMain.Instance.Input.Slam -= InitiateSlam;
+            PlayerMain.Instance.Movement.PlayerLand += PerformingSlamificationOnThee;
+
+            _coroutine = StartCoroutine(BeginSlam());
         }
     }
 
-    private void BeginSlam()
+    private IEnumerator BeginSlam()
     {
+        yield return new WaitForSeconds(0.3f);
         _slamming = true;
         _tr.enabled = true;
+        _trigger.enabled = true;
         _rb.gravityScale = _gravScale;
+
+        MotionBlur blur;
+
+        if (_globalVolume.profile.TryGet(out blur))
+        {
+            blur.intensity.Override(1.0f);
+        }
+
+        PlayerMain.Instance.Death.SendMessage("Invincibility");
     }
 
     public void PerformingSlamificationOnThee()
     {
+        if (_coroutine == null) StopCoroutine(_coroutine);
+
         _slamming = false;
         _tr.enabled = false;
         _trigger.enabled = false;
+
+        MotionBlur blur;
+
+        if (_globalVolume.profile.TryGet(out blur))
+        {
+            blur.intensity.Override(0.0f);
+        }
+
+
         this.transform.rotation = Quaternion.Euler(0, 0, 0);
 
-        Slamming?.Invoke();
+        PlayerMain.Instance.Input.Slam += InitiateSlam;
+        PlayerMain.Instance.Movement.PlayerLand -= PerformingSlamificationOnThee;
+        PlayerMain.Instance.Death.SendMessage("UnInvincibility");
+
+        Slamming?.Invoke(_slamStage);
     }
 }

@@ -61,51 +61,48 @@ public class PlayerTeleport : MonoBehaviour
 
         if (readDir != Vector2.zero)
         {
+            _arrow.SetActive(true);
             var angle = Mathf.Atan2(readDir.x, -readDir.y) * (180 / Mathf.PI) + 180;
-            print(angle);
 
             angle = Math.QuantizeAngle(angle, 12);
-            print(angle);
             _angle = angle;
-            _arrow.SetActive(true);
             _arrow.transform.rotation = Quaternion.Euler(0, 0, _angle);
 
             angle *= (Mathf.PI / 180);
             _dir = new Vector2(-Mathf.Sin(angle), Mathf.Cos(angle));
-            _arrow.transform.position = this.transform.position + (Vector3)_dir;
         }
 
         else
         {
             _arrow.SetActive(false);
         }
+
     }
 
     void OnTeleport(InputAction.CallbackContext ctx)
     {
         _arrow.SetActive(false);
-        if (ctx.performed && availableTP > 0 && _frameCounter > 14)
+        if (ctx.performed && availableTP > 0 && _frameCounter > 6)
         {
             if (_dir == Vector2.zero) return;
 
             var vect = transform.position + (Vector3)(_dir * _distance);
-            print(vect);
 
-            var cast = Physics2D.Raycast(vect, _dir, 0.1f);
-
-            print(cast.collider);
+            var cast = Physics2D.Raycast(vect, _dir, -0.001f);
 
             var trail = Instantiate(_trail, this.transform.position, Quaternion.Euler(0, 0, Mathf.Atan2(_dir.x, -_dir.y) * (180 / Mathf.PI)));
 
             if (cast.collider == null)
             {
                 transform.position += (Vector3)(_dir * _distance);
+
             }
             else
             {
                 var newCast = Physics2D.Raycast(transform.position, _dir, _distance);
                 if (transform.position == (Vector3)(newCast.point - (_dir * 0.75f))) return;
                 transform.position = newCast.point - (_dir * 0.75f);
+
             }
 
             //Instantiate(_particle, transform.position, transform.rotation);
@@ -127,6 +124,21 @@ public class PlayerTeleport : MonoBehaviour
     {
         if (PlayerMain.Instance.Movement.IsGrounded) availableTP = _maxTP;
         _frameCounter++;
+        var vect = transform.position + (Vector3)(_dir * _distance);
+
+        var cast = Physics2D.Raycast(vect, _dir, -0.001f);
+
+        if (cast.collider == null)
+        {
+            _arrow.transform.position = transform.position + (Vector3)(_dir * _distance);
+
+        }
+        else
+        {
+            var newCast = Physics2D.Raycast(transform.position, _dir, _distance);
+            _arrow.transform.position = newCast.point - (_dir * 0.75f);
+
+        }
     }
 
     public IEnumerator Glow()

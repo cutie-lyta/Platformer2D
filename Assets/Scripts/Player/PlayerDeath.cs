@@ -1,17 +1,23 @@
 using DG.Tweening;
+using System;
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerDeath : MonoBehaviour
 {
+    public event Action PlayerDies;
+
     [SerializeField]
     private GameObject _particule;
     [SerializeField]
     private Image _redScreen;
+    [SerializeField]
+    private GameObject _halo;
     private SpriteRenderer _spriteRenderer;
+
+    private bool _invincible;
 
     private void Start()
     {
@@ -28,19 +34,21 @@ public class PlayerDeath : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") && !_invincible)
         {
+            PlayerDies?.Invoke();
+
             PlayerMain.Instance.Input.SendMessage("StopInput");
-            Time.timeScale = 0.0f;
-            _redScreen.DOFade(80.0f, 0.5f).SetUpdate(true);
+            Time.timeScale = 0;
+            _redScreen.DOFade(20.0f, 0.5f).SetUpdate(true);
             _redScreen.DOFade(0.0f, 0.5f).SetUpdate(true).onComplete = () =>
             {
-                // Yoann met le screen shake stp
-                _particule.transform.position = this.transform.position;
+                var go = Instantiate(_particule);
+                go.transform.position = this.transform.position;
                 _spriteRenderer.DOFade(0.0f, 0.1f).SetUpdate(true);
-                Time.timeScale = 1.0f;
-                Instantiate(_particule);
+                Time.timeScale = 1;
                 Destroy(PlayerMain.Instance);
+                Destroy(_halo);
                 StartCoroutine(WaitForLoad());
             };
         }
@@ -48,7 +56,18 @@ public class PlayerDeath : MonoBehaviour
 
     public IEnumerator WaitForLoad()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
         SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex));
+        Time.timeScale = 1;
+    }
+
+    public void Invincibility()
+    {
+        _invincible = true;
+    }
+
+    public void UnInvincibility()
+    {
+        _invincible = false;
     }
 }
