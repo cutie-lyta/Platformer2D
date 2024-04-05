@@ -32,6 +32,11 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsGrounded { get; private set; } = true;
 
+    private AudioSource source;
+
+    [SerializeField]
+    private AudioClip _clip;
+
     // Local Use
     private bool _prevIsGrounded;
 
@@ -44,6 +49,8 @@ public class PlayerMovement : MonoBehaviour
         _initGravScale = _rb.gravityScale;
 
         _whatIsGround = LayerMask.GetMask("Ground");
+
+        source = GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
@@ -73,13 +80,23 @@ public class PlayerMovement : MonoBehaviour
             {
                 _part = Instantiate(_partMovement, this.transform);
             }
+            if (!source.isPlaying)
+            {
+                source.clip = _clip;
+                source.loop = false;
+                source.Play();
+            }
         }
         else
         {
+            if (source.clip == _clip)
+            {
+                source.Stop();
+            }
             Destroy(_part);
         }
-        
-        
+
+
 
         if (!_prevIsGrounded && _prevIsGrounded != IsGrounded)
         {
