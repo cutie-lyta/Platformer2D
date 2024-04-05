@@ -13,7 +13,7 @@ public class PlayerSound : MonoBehaviour
     AudioClip fall;
 
     [SerializeField]
-    AudioClip explosion;
+    AudioClip[] explosion;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +30,7 @@ public class PlayerSound : MonoBehaviour
 
         PlayerMain.Instance.Slam.Slamming += (i) =>
         {
-            source.clip = explosion;
+            source.clip = explosion[i];
             source.loop = false;
             source.Play();
         };
