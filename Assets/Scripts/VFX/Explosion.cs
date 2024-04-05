@@ -36,4 +36,12 @@ public class Explosion : MonoBehaviour, IPoolable
     {
         return this.gameObject;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            collision.SendMessage("Kill");
+        }
+    }
 }

@@ -1,26 +1,39 @@
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerScreenShake : MonoBehaviour
 {
+    [Header("Explosion")]
     [SerializeField]
-    private Vector3 _impulseDirection;
+    private CinemachineImpulseSource _explosionImpulse;
     [SerializeField]
-    private float _impulseStrengthBase;
+    private Vector3 _explosionDirection;
+    [SerializeField]
+    private float _explosionStrengthBase;
 
-    private CinemachineImpulseSource _impulse;
+    [Header("Death")]
+    [SerializeField]
+    private CinemachineImpulseSource _deathImpulse;
+    [SerializeField]
+    private Vector3 _deathDirection;
+    [SerializeField]
+    private float _deathStrengthBase;
 
     // Start is called before the first frame update
     void Start()
     {
-        _impulse = GetComponent<CinemachineImpulseSource>();
-
         PlayerMain.Instance.Slam.Slamming += SlamShake;
+        PlayerMain.Instance.Death.PlayerDies += DeathShake;
     }
 
     private void SlamShake(int strength)
     {
-        _impulse.GenerateImpulse(_impulseDirection.normalized * (strength * strength + _impulseStrengthBase));
+        _explosionImpulse.GenerateImpulse(_explosionDirection.normalized * (strength * strength + _explosionStrengthBase));
+    }
+
+    private void DeathShake()
+    {
+        Debug.Log("Shake");
+        _explosionImpulse.GenerateImpulse(_deathDirection.normalized * (_deathStrengthBase));
     }
 }

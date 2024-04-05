@@ -1,12 +1,14 @@
 using DG.Tweening;
+using System;
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerDeath : MonoBehaviour
 {
+    public event Action PlayerDies;
+
     [SerializeField]
     private GameObject _particule;
     [SerializeField]
@@ -32,6 +34,8 @@ public class PlayerDeath : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy") && !_invincible)
         {
+            PlayerDies?.Invoke();
+
             PlayerMain.Instance.Input.SendMessage("StopInput");
             Time.timeScale = 0;
             _redScreen.DOFade(10.0f, 0.5f).SetUpdate(true);
