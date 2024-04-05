@@ -29,6 +29,7 @@ public class Explosion : MonoBehaviour, IPoolable
     public void Unuse()
     {
         InUse = false;
+        transform.position = ObjectPool.Instance.transform.position;
     }
 
     public GameObject GetGameObject()
