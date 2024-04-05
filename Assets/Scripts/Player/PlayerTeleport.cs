@@ -124,8 +124,21 @@ public class PlayerTeleport : MonoBehaviour
     {
         if (PlayerMain.Instance.Movement.IsGrounded) availableTP = _maxTP;
         _frameCounter++;
-        _arrow.transform.position = this.transform.position + (Vector3)_dir;
+        var vect = transform.position + (Vector3)(_dir * _distance);
 
+        var cast = Physics2D.Raycast(vect, _dir, -0.001f);
+
+        if (cast.collider == null)
+        {
+            _arrow.transform.position = transform.position + (Vector3)(_dir * _distance);
+
+        }
+        else
+        {
+            var newCast = Physics2D.Raycast(transform.position, _dir, _distance);
+            _arrow.transform.position = newCast.point - (_dir * 0.75f);
+
+        }
     }
 
     public IEnumerator Glow()

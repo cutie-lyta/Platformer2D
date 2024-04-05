@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class EnemyDeath : MonoBehaviour
@@ -9,9 +10,16 @@ public class EnemyDeath : MonoBehaviour
 
     public void Kill()
     {
-        _enemyBehaviour.enabled = false;
+        Time.timeScale = 0.2f;
         var go = Instantiate(_particule);
+        this.GetComponent<Collider2D>().enabled = false;
+        this.GetComponent<EnemyBehaviour>().enabled = false;
+        this.GetComponent<SpriteRenderer>().enabled = false;
+        _enemyBehaviour.enabled = false;
         go.transform.position = this.transform.position;
-        Destroy(this.gameObject);
+        DOTween.To(()=> Time.timeScale, x => Time.timeScale = x, 1, 0.2f).onComplete += ()=>
+            {
+                Destroy(this.gameObject);
+            };
     }
 }
