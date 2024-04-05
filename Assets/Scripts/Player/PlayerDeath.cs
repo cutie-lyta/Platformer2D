@@ -13,6 +13,8 @@ public class PlayerDeath : MonoBehaviour
     private Image _redScreen;
     private SpriteRenderer _spriteRenderer;
 
+    private bool _invincible;
+
     private void Start()
     {
         _spriteRenderer = this.GetComponent<SpriteRenderer>();
@@ -28,18 +30,17 @@ public class PlayerDeath : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") && !_invincible)
         {
             PlayerMain.Instance.Input.SendMessage("StopInput");
-            Time.timeScale = 0.0f;
-            _redScreen.DOFade(80.0f, 0.5f).SetUpdate(true);
+            Time.timeScale = 0;
+            _redScreen.DOFade(10.0f, 0.5f).SetUpdate(true);
             _redScreen.DOFade(0.0f, 0.5f).SetUpdate(true).onComplete = () =>
             {
-                // Yoann met le screen shake stp
                 var go = Instantiate(_particule);
                 go.transform.position = this.transform.position;
                 _spriteRenderer.DOFade(0.0f, 0.1f).SetUpdate(true);
-                Time.timeScale = 1.0f;
+                Time.timeScale = 0.45f;
                 Destroy(PlayerMain.Instance);
                 StartCoroutine(WaitForLoad());
             };
@@ -48,7 +49,18 @@ public class PlayerDeath : MonoBehaviour
 
     public IEnumerator WaitForLoad()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
         SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex));
+        Time.timeScale = 1;
+    }
+
+    public void Invincibility()
+    {
+        _invincible = true;
+    }
+
+    public void UnInvincibility()
+    {
+        _invincible = false;
     }
 }

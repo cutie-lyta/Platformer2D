@@ -1,11 +1,12 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class PlayerSlam : MonoBehaviour
 {
     public event Action<int> Slamming;
-
+    public event Action<int> SlamEnded;
 
     [SerializeField]
     private float _initJumpForce;
@@ -15,7 +16,7 @@ public class PlayerSlam : MonoBehaviour
 
     [SerializeField]
     private int[] _framesForSlamStage;
-    
+
     [SerializeField]
     private Collider2D _trigger;
 
@@ -25,6 +26,8 @@ public class PlayerSlam : MonoBehaviour
     private bool _slamming;
     private int _slamStage = 0;
     private int _frameCounter;
+
+    private Coroutine _coroutine;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +52,7 @@ public class PlayerSlam : MonoBehaviour
 
             _frameCounter++;
         }
+        _trigger.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     void InitiateSlam(InputAction.CallbackContext ctx)
@@ -65,20 +69,24 @@ public class PlayerSlam : MonoBehaviour
             PlayerMain.Instance.Input.Slam -= InitiateSlam;
             PlayerMain.Instance.Movement.PlayerLand += PerformingSlamificationOnThee;
 
-            Invoke("BeginSlam", 0.3f);
+            _coroutine = StartCoroutine(BeginSlam());
         }
     }
 
-    private void BeginSlam()
+    private IEnumerator BeginSlam()
     {
+        yield return new WaitForSeconds(0.3f);
         _slamming = true;
         _tr.enabled = true;
         _trigger.enabled = true;
         _rb.gravityScale = _gravScale;
+        PlayerMain.Instance.Death.SendMessage("Invincibility");
     }
 
     public void PerformingSlamificationOnThee()
     {
+        if (_coroutine != null) StopCoroutine(_coroutine);
+
         _slamming = false;
         _tr.enabled = false;
         _trigger.enabled = false;
@@ -87,6 +95,7 @@ public class PlayerSlam : MonoBehaviour
 
         PlayerMain.Instance.Input.Slam += InitiateSlam;
         PlayerMain.Instance.Movement.PlayerLand -= PerformingSlamificationOnThee;
+        PlayerMain.Instance.Death.SendMessage("UnInvincibility");
 
         Slamming?.Invoke(_slamStage);
     }

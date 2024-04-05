@@ -35,6 +35,7 @@ public class PlayerSquach : MonoBehaviour
         seq.Insert(0.1f, transform.DOMove(position, 0.13f))
             .OnComplete(() => { PlayerMain.Instance.Input.SendMessage("StartInput"); transform.localScale = _scale; })
             .OnKill(() => { transform.localScale = _scale; });
+        seq.onUpdate += () => { transform.rotation = Quaternion.Euler(0, 0, 0); };
 
     }
 
