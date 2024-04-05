@@ -359,7 +359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initJumpForce: 200
   _gravScale: 18
-  _framesForSlamStage: 0f0000001e0000002d000000
+  _framesForSlamStage: 0c0000001a00000028000000
   _trigger: {fileID: 1052970897772190499}
 --- !u!96 &6444362779545880137
 TrailRenderer:
