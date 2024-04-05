@@ -8,7 +8,6 @@ using UnityEngine.Rendering.Universal;
 public class PlayerSlam : MonoBehaviour
 {
     public event Action<int> Slamming;
-    public event Action<int> SlamEnded;
 
     [SerializeField]
     private float _initJumpForce;

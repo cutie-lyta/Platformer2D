@@ -579,10 +579,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1599867964208825498, guid: 04d346f3f0ab4b6488ea17679c0eac30, type: 3}
-      propertyPath: _confettis
-      value: 
-      objectReference: {fileID: 8574164389404774290, guid: c8d748814800df641a75578b66109c9f, type: 3}
     - target: {fileID: 5257130734508707671, guid: 04d346f3f0ab4b6488ea17679c0eac30, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.2224603
@@ -626,10 +622,6 @@ PrefabInstance:
     - target: {fileID: 8915191329872190669, guid: 04d346f3f0ab4b6488ea17679c0eac30, type: 3}
       propertyPath: m_Name
       value: Finish
-      objectReference: {fileID: 0}
-    - target: {fileID: 8915191329872190669, guid: 04d346f3f0ab4b6488ea17679c0eac30, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
