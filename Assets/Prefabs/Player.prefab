@@ -103,6 +103,8 @@ GameObject:
   - component: {fileID: 8874769370061595416}
   - component: {fileID: 4028796818594947604}
   - component: {fileID: 6020345364742424445}
+  - component: {fileID: 4120768225468827831}
+  - component: {fileID: 8969981003440235938}
   m_Layer: 2
   m_Name: Player
   m_TagString: Player
@@ -313,6 +315,7 @@ MonoBehaviour:
   _maxAirSpeed: 10
   _playerHeight: 1
   _partMovement: {fileID: 9081079273953894127, guid: a1045e880e3c4664cba35a2a976fcf51, type: 3}
+  _clip: {fileID: 8300000, guid: 36cff644b058cdd48a70d7faa428532a, type: 3}
 --- !u!114 &5583548275162361252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,6 +352,7 @@ MonoBehaviour:
   _gravScale: 18
   _framesForSlamStage: 0c0000001a00000028000000
   _trigger: {fileID: 1052970897772190499}
+  _globalVolume: {fileID: 0}
 --- !u!96 &6444362779545880137
 TrailRenderer:
   serializedVersion: 3
@@ -598,7 +602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ImpulseDefinition:
+   m_ImpulseDefinition:
     m_ImpulseChannel: 1
     m_ImpulseShape: 3
     m_CustomImpulseShape:
@@ -639,6 +643,20 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 1, y: 0, z: 0}
+--- !u!114 &1061350614155779114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4561675066543495144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3986dded73668ac46826ed80606a4269, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _material: {fileID: 2100000, guid: 29d908a27adef0640b04d3889a8e73ef, type: 2}
+  _effectSpawn: {fileID: 4084549945183177748}
 --- !u!1 &5211965820747437968
 GameObject:
   m_ObjectHideFlags: 0
