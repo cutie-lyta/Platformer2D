@@ -364,6 +364,7 @@ MonoBehaviour:
   _gravScale: 18
   _framesForSlamStage: 0c0000001a00000028000000
   _trigger: {fileID: 1052970897772190499}
+  _globalVolume: {fileID: 0}
 --- !u!96 &6444362779545880137
 TrailRenderer:
   serializedVersion: 3

@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerSlam : MonoBehaviour
 {
@@ -28,6 +30,9 @@ public class PlayerSlam : MonoBehaviour
     private int _frameCounter;
 
     private Coroutine _coroutine;
+
+    [SerializeField]
+    private Volume _globalVolume;
 
     // Start is called before the first frame update
     void Start()
@@ -80,16 +85,32 @@ public class PlayerSlam : MonoBehaviour
         _tr.enabled = true;
         _trigger.enabled = true;
         _rb.gravityScale = _gravScale;
+
+        MotionBlur blur;
+
+        if (_globalVolume.profile.TryGet(out blur))
+        {
+            blur.intensity.Override(1.0f);
+        }
+
         PlayerMain.Instance.Death.SendMessage("Invincibility");
     }
 
     public void PerformingSlamificationOnThee()
     {
-        if (_coroutine != null) StopCoroutine(_coroutine);
+        if (_coroutine == null) StopCoroutine(_coroutine);
 
         _slamming = false;
         _tr.enabled = false;
         _trigger.enabled = false;
+
+        MotionBlur blur;
+
+        if (_globalVolume.profile.TryGet(out blur))
+        {
+            blur.intensity.Override(0.0f);
+        }
+
 
         this.transform.rotation = Quaternion.Euler(0, 0, 0);
 
