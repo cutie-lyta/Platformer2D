@@ -16,7 +16,7 @@ public static class Math
     {
         var array = new List<float>();
 
-        for (int i = 0; i < 360; i += 360 / quantization)
+        for (float i = 0; i < 360f; i += 360f / quantization)
         {
             array.Add(i);
         }

@@ -52,6 +52,7 @@ public class PlayerTeleport : MonoBehaviour
         _default = _spriteRenderer.material;
         PlayerMain.Instance.Input.Teleport += OnTeleport;
         PlayerMain.Instance.Input.Movement += OnMovement;
+        PlayerMain.Instance.Movement.PlayerLand += RestoreTP;
         availableTP = _maxTP;
     }
 
@@ -64,7 +65,7 @@ public class PlayerTeleport : MonoBehaviour
             _arrow.SetActive(true);
             var angle = Mathf.Atan2(readDir.x, -readDir.y) * (180 / Mathf.PI) + 180;
 
-            angle = Math.QuantizeAngle(angle, 12);
+            angle = Math.QuantizeAngle(angle, 16);
             _angle = angle;
             _arrow.transform.rotation = Quaternion.Euler(0, 0, _angle);
 
@@ -115,6 +116,8 @@ public class PlayerTeleport : MonoBehaviour
 
             Teleport?.Invoke();
 
+            Invoke("CheckStillGround", 0.1f);
+
             availableTP--;
             _frameCounter = 0;
         }
@@ -122,7 +125,6 @@ public class PlayerTeleport : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (PlayerMain.Instance.Movement.IsGrounded) availableTP = _maxTP;
         _frameCounter++;
         var vect = transform.position + (Vector3)(_dir * _distance);
 
@@ -147,5 +149,18 @@ public class PlayerTeleport : MonoBehaviour
         DOTween.To(() => _spriteRenderer.material.GetFloat("_Intensity"), x => _spriteRenderer.material.SetFloat("_Intensity", x), 0.0f, 0.3f);
         yield return new WaitForSeconds(0.3f);
         _spriteRenderer.material = _default;
+    }
+
+    private void CheckStillGround()
+    {
+        if (PlayerMain.Instance.Movement.IsGrounded)
+        {
+            RestoreTP();
+        }
+    }
+
+    private void RestoreTP()
+    {
+        availableTP = _maxTP;
     }
 }
