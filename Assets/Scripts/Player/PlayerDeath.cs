@@ -13,6 +13,8 @@ public class PlayerDeath : MonoBehaviour
     private GameObject _particule;
     [SerializeField]
     private Image _redScreen;
+    [SerializeField]
+    private GameObject _halo;
     private SpriteRenderer _spriteRenderer;
 
     private bool _invincible;
@@ -46,6 +48,7 @@ public class PlayerDeath : MonoBehaviour
                 _spriteRenderer.DOFade(0.0f, 0.1f).SetUpdate(true);
                 Time.timeScale = 1;
                 Destroy(PlayerMain.Instance);
+                Destroy(_halo);
                 StartCoroutine(WaitForLoad());
             };
         }
