@@ -21,6 +21,6 @@ public class PlayerScreenShake : MonoBehaviour
 
     private void SlamShake(int strength)
     {
-        _impulse.GenerateImpulse(_impulseDirection.normalized * (strength * 2 + _impulseStrengthBase));
+        _impulse.GenerateImpulse(_impulseDirection.normalized * (strength * strength + _impulseStrengthBase));
     }
 }

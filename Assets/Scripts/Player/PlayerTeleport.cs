@@ -61,11 +61,11 @@ public class PlayerTeleport : MonoBehaviour
 
         if (readDir != Vector2.zero)
         {
+            _arrow.SetActive(true);
             var angle = Mathf.Atan2(readDir.x, -readDir.y) * (180 / Mathf.PI) + 180;
 
             angle = Math.QuantizeAngle(angle, 12);
             _angle = angle;
-            _arrow.SetActive(true);
             _arrow.transform.rotation = Quaternion.Euler(0, 0, _angle);
 
             angle *= (Mathf.PI / 180);
@@ -77,12 +77,13 @@ public class PlayerTeleport : MonoBehaviour
         {
             _arrow.SetActive(false);
         }
+
     }
 
     void OnTeleport(InputAction.CallbackContext ctx)
     {
         _arrow.SetActive(false);
-        if (ctx.performed && availableTP > 0 && _frameCounter > 5)
+        if (ctx.performed && availableTP > 0 && _frameCounter > 14)
         {
             if (_dir == Vector2.zero) return;
 
@@ -112,7 +113,6 @@ public class PlayerTeleport : MonoBehaviour
 
             if (_testForce) _rb.AddForce(_dir * _speed, ForceMode2D.Impulse);
             else _rb.velocity = _dir * _speed;
-            print($"{_rb.velocity} = {_dir} * {_speed}");
 
             Teleport?.Invoke();
 
